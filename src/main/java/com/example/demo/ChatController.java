@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import service.ModelService;
+
 
 @RestController
 @RequestMapping("/api")
@@ -20,6 +22,9 @@ public class ChatController {
     
     @Autowired
     private ChatModel chatModel;
+
+    @Autowired
+    private ModelService modelService;
 
     // public ChatController(ChatModel chatModel) {
     //     this.chatClient = ChatClient.builder(
@@ -35,19 +40,33 @@ public class ChatController {
     public String chat(@RequestHeader(value="AI-Provider",defaultValue = "google-genai-pro") String provider,
         @RequestHeader(value="AI-Model",defaultValue = "gemini-3-flash-preview") String model,
         @RequestBody String message) {
-            ChatClient chatClient = ChatClient.builder(chatModel)
-                .build();
-        return chatClient
-        .prompt()
-        .user(message)
-        .options(GoogleGenAiChatOptions
-            .builder()
-            .model(model)
-            .temperature(1.5)
-            .maxOutputTokens(2000)
-            .build())
-        .call()
-        .content();
+        
+            ChatClient chatClient = modelService.getChatClient(provider);
+        
+            if (model == null || model.isEmpty()) {
+                return chatClient
+                .prompt()
+                .user(message)
+                .options(GoogleGenAiChatOptions
+                    .builder()
+                    .model(model)
+                    .temperature(1.5)
+                    .maxOutputTokens(2000)
+                    .build())
+                .call()
+                .content();
+            }
+            return chatClient
+                .prompt()
+                .user(message)
+                .options(GoogleGenAiChatOptions
+                    .builder()
+                    .temperature(1.5)
+                    .maxOutputTokens(2000)
+                    .build())
+                .call()
+                .content();
+            
     }
 
 
