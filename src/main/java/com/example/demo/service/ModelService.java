@@ -1,4 +1,4 @@
-package service;
+package com.example.demo.service;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,7 @@ import org.springframework.ai.google.genai.GoogleGenAiChatModel;
 import org.springframework.ai.google.genai.GoogleGenAiChatOptions;
 import org.springframework.ai.model.tool.ToolCallingManager;
 import org.springframework.ai.model.tool.ToolExecutionEligibilityPredicate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,10 +31,7 @@ public class MultiModelConfiguration {
     public ChatModel secondaryChatModel(
             @Value("${app.gemini.secondary.api-key}") String apiKey,
             @Value("${app.gemini.secondary.model}") String model,
-            ToolCallingManager toolCallingManager,
-            RetryTemplate retryTemplate,
-            ObservationRegistry observationRegistry,
-            ToolExecutionEligibilityPredicate toolExecutionEligibilityPredicate) {
+            RetryTemplate retryTemplate) {
 
         Client genAiClient = Client.builder()
                 .apiKey(apiKey)
@@ -43,13 +41,17 @@ public class MultiModelConfiguration {
                 .model(model)
                 .build();
 
+        ToolCallingManager toolCallingManager = ToolCallingManager.builder().build();
+
+        ToolExecutionEligibilityPredicate predicate = (request, response) -> true;
+
         return new GoogleGenAiChatModel(
                 genAiClient,
                 options,
                 toolCallingManager,
                 retryTemplate,
-                observationRegistry,
-                toolExecutionEligibilityPredicate);
+                ObservationRegistry.NOOP,
+                predicate);
     }
 
     @Primary
