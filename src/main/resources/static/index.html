@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Streaming Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="chat-card">
+            <h2>AI Streaming Chat</h2>
+            <p class="subtitle">Watch AI respond in real-time, word by word!</p>
+
+            <div class="input-group-row">
+    <div class="input-field">
+        <label>Provider</label>
+        <select id="provider" onchange="updateModels()">
+            <option value="openai">OpenAI</option>
+            <option value="gemini">Gemini</option>
+        </select>
+    </div>
+    <div class="input-field">
+        <label>Model</label>
+        <select id="model">
+            </select>
+    </div>
+</div>
+
+            <div class="input-field">
+                <label>Your Message</label>
+                <textarea id="message" rows="4" placeholder="Explain Spring Boot in simple terms"></textarea>
+            </div>
+
+            <button id="startBtn">Start Streaming</button>
+
+            <div class="response-section">
+                <label>AI Response:</label>
+                <div id="responseArea" class="response-box"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

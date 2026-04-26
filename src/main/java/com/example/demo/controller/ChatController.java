@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
@@ -16,6 +16,7 @@ import com.example.demo.service.ModelService;
 
 @RestController
 @RequestMapping("/api")
+
 public class ChatController {
     
     @Autowired
