@@ -18,9 +18,6 @@ import com.example.demo.service.ModelService;
 @RequestMapping("/api")
 
 public class ChatController {
-    
-    @Autowired
-    private ChatModel chatModel;
 
     @Autowired
     private ModelService modelService;

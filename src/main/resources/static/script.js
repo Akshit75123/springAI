@@ -43,7 +43,7 @@ document.getElementById('startBtn').addEventListener('click', async function() {
 
     responseArea.innerText = "Thinking...";
 
-    const url = `/stream?provider=${encodeURIComponent(provider)}&model=${encodeURIComponent(model)}&message=${encodeURIComponent(message)}`;
+    const url = `/api/stream?provider=${encodeURIComponent(provider)}&model=${encodeURIComponent(model)}&message=${encodeURIComponent(message)}`;
 
     try {
         const response = await fetch(url);
@@ -52,7 +52,7 @@ document.getElementById('startBtn').addEventListener('click', async function() {
         
         responseArea.innerText = ""; // Clear "Thinking..." once stream starts
 
-        // Replace your while(true) loop with this:
+        
 let buffer = ''; 
 
 while (true) {
