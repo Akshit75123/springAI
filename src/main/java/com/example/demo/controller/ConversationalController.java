@@ -29,7 +29,7 @@ public class ConversationalController {
     @PostMapping("/{conversationId}")
     public Map<String, Object> chat(
             @PathVariable String conversationId,
-            @RequestHeader(value = "AI-Provider", defaultValue = "openai") String provider,
+            @RequestHeader(value = "AI-Provider", defaultValue = "gemini") String provider,
             @RequestHeader(value = "AI-Model", required = false) String model,
             @RequestBody String message
     ) {
@@ -46,14 +46,14 @@ public class ConversationalController {
 
         List<Message> history = conversationService.getRecentMessages(conversationId);
 
-        log.info("=== REQUEST RECEIVED ===");
-        log.info("Provider: {}", provider);
-        log.info("Model header: {}", model);
-        log.info("Message: {}", message);
+//        log.info("=== REQUEST RECEIVED ===");
+//        log.info("Provider: {}", provider);
+//        log.info("Model header: {}", model);
+//        log.info("Message: {}", message);
 
         ChatClient chatClient = modelService.getChatClient(provider);
-        log.info("ChatClient class: {}", chatClient.getClass().getName());
-        log.info("ChatClient: {}", chatClient);
+//        log.info("ChatClient class: {}", chatClient.getClass().getName());
+//        log.info("ChatClient: {}", chatClient);
 
         var promptSpec = chatClient.prompt().messages(history);
 
@@ -66,13 +66,13 @@ public class ConversationalController {
             );
         }
 
-        log.info("Using default model from ChatClient bean");
-        log.info("=== CALLING PROMPT ===");
+//        log.info("Using default model from ChatClient bean");
+//        log.info("=== CALLING PROMPT ===");
 
         ChatResponse response = promptSpec.call().chatResponse();
-        String aiResponse = response.getResult().getOutput().toString();
+        String aiResponse = response.getResult().getOutput().getText();
 
-        log.info("aiResponse = "+ aiResponse);
+//        log.info("aiResponse = "+ aiResponse);
 
         conversationService.addAssistantMessage(conversationId, aiResponse);
 
@@ -98,7 +98,7 @@ public class ConversationalController {
                 "messages", messages.stream()
                         .map(msg -> Map.of(
                                 "role", msg.getMessageType().getValue(),
-                                "content", msg.toString()
+                                "content", msg.getText()
                         ))
                         .toList()
         );
