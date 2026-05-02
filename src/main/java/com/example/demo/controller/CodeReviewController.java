@@ -56,6 +56,8 @@ public class CodeReviewController {
                 .user(prompt.getContents())
                 .options(OpenAiChatOptions.builder()
                         .model(model)
+                        .temperature(0.2)
+                        // .maxCompletionTokens(2000)
                         .build())
                 .call()
                 .content();
