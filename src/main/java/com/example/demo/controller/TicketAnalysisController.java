@@ -20,7 +20,7 @@ public class TicketAnalysisController {
     public Map<String, Object> analyzeTicket(
             @RequestBody Map<String, String> request,
             @RequestParam(defaultValue = "openai") String provider,
-            @RequestParam(defaultValue = "gpt-5") String model
+            @RequestParam(defaultValue = "gpt-5.4-mini") String model
     ) {
         String ticketText = request.get("ticketText");
 
