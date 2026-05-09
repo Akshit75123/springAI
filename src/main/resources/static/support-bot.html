@@ -398,7 +398,7 @@
 
         try {
             const config = modeConfig[currentMode];
-            const response = await fetch(`${config.endpoint}?provider=openai&model=gpt-4o`, {
+            const response = await fetch(`${config.endpoint}?provider=gemini&model=gemini-2.5-flash`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: message })
