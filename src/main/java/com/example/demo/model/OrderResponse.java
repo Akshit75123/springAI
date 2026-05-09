@@ -1,0 +1,12 @@
+package com.example.demo.model;
+
+
+public record OrderResponse(
+        String orderId,
+        String status,
+        String estimatedDelivery,
+        String trackingNumber,
+        String customerName,
+        double totalAmount
+) {}
+
